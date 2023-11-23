@@ -1,0 +1,29 @@
+/* Center the table in print view */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #reportTable {
+        width: 100%;
+        margin: 0 auto; /* Center the table horizontally */
+        border: 1px solid black;
+        border-collapse: collapse;
+        visibility: visible;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid black;
+        visibility: visible;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /* Display the print button */
+    #printButton {
+        display: block !important;
+    }
+
+    /* Add any additional print-specific styles you need */
+}

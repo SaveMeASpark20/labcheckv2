@@ -1,0 +1,112 @@
+.complab-schedule{
+	display: flex;
+	gap: 10px;
+	margin-bottom: 10px;
+	justify-content: space-between;
+	background: #fff;
+	padding: 1.5rem;
+	border-radius: 20px;
+	flex-direction: column;
+	box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+	margin: 1.5rem;
+	
+}
+.complab-schedule h2{
+	margin-bottom: 10px;
+	font-size: 2rem;
+	border-bottom: solid 1px var(--grey);
+	
+}
+.month-year button{
+	background: rgb(255, 217, 2);
+	color: #222;
+	padding: 5px 10px; 
+	border-radius: 10px;
+	border: none;
+	font-weight: 500;
+	cursor: pointer;
+}
+.month-year{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+#table-calendar{
+	font-size: 10px;
+	margin-top: 10px;
+}
+
+.table {
+	max-width: 100%; 
+	overflow-x: scroll;
+}
+
+.current-week{
+	background-color: var(--main-color);
+	padding: 10px;
+	margin: 10px; 
+	color: white;
+	border-radius: 10px;
+	border: none;
+	font-weight: 600;
+	justify-content: space-between;
+	align-items: center;
+	margin-right: 2.5px;
+}
+.adjust-by-week{
+	text-align: center;
+	font-size: x-small;
+	background-color: rgb(255, 217, 2);
+	padding: 10px;
+	color: #222;
+	border-radius: 10px;
+	border: none;
+	font-weight: 600;
+	justify-content: space-between;
+	font-family: "Poppins", sans-serif;
+	margin-left: 2.5px;
+}
+.date-today{
+	background-color: yellow;
+}
+
+table {
+    /* table-layout: fixed;  */
+    border-collapse: collapse;
+	 
+}
+
+table th {
+	position: sticky;
+	background-color: white;
+	z-index: 2;
+	top: 20px;
+}
+
+th, td {
+    text-align: left;
+    vertical-align: top; /* Align content to the top of cells */
+    padding: 8px; /* Adjust padding as needed */
+    word-wrap: break-word; /* Allow long words to wrap within cells */
+}
+
+ thead th {
+	border-top: solid 1px var(--main-color);
+	border-bottom: solid 2px var(--main-color);
+	
+}
+
+
+tr:nth-of-type(2n) {
+    background-color: #f5f5dd;
+}
+
+
+  
+
+
+  

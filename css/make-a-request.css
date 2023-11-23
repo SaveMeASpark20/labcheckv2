@@ -1,0 +1,100 @@
+main {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.make-a-request{
+  display: flex;
+  justify-content: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 500px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.request-row {
+    display: flex;
+    gap:10px;
+    align-items: center;
+}
+
+textarea {
+    resize: none;
+    width: 100%;
+    height: 100px;
+}
+
+.time-date {
+    display: flex;
+    gap: 5px;
+}
+.time-date input {
+    flex: 1;
+}
+.room-submit {
+    display: flex;    
+}
+
+.room-submit select{
+    flex: 1;
+    margin-right: 5px;
+}
+
+.room-submit button {
+  flex: 1;
+  background-color: #006d1b;
+  border:none;
+  color: #fff;
+}
+
+.notification {
+	position: absolute;
+	top: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	animation: fadeIn 0.5s, fadeOut 0.5s 2.5s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.notification p {
+	padding: 2px;
+}
+
+.error{
+	background-color: rgb(225, 110, 116);
+}
+
+.success{
+	background-color: rgb(135, 223, 135);
+}
+
+.hidden {
+  display: none;
+}
+
+.time {
+  margin-right: 10px;
+}
