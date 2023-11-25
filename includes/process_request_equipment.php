@@ -16,6 +16,9 @@ if (isset($_POST['approve']) || isset($_POST['reject'])) {
 
     // Assuming adminid is the admin's identifier in the sessions
     $adminId = $_SESSION["adminid"];
+    $name = ucwords($_SESSION ["name"]);
+    $schoolYear = $_SESSION['school_year'];
+    $semester = $_SESSION['semester'];
     
     $feedbackDone = "DONE";
     // Fetch the ticket_no from the database
@@ -34,11 +37,11 @@ if (isset($_POST['approve']) || isset($_POST['reject'])) {
             if ($stmt->execute()) {
                 // Log successful update
                 $logEventType = "Equipment Request";
-                $logEventDescription = "Ticket No $ticketNo status updated to $newStatus (rejected) with reason: $rejectReason by Admin ID $adminId";
+                $logEventDescription = "Ticket No $ticketNo status updated to $newStatus with reason: $rejectReason by Admin: $name";
 
-                $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id) VALUES (?, ?, ?)';
+                $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id, school_year, semester) VALUES (?, ?, ?, ?, ?)';
                 $logStmt = $conn->prepare($logSql);
-                $logStmt->bind_param('sss', $logEventType, $logEventDescription, $adminId);
+                $logStmt->bind_param('sssss', $logEventType, $logEventDescription, $adminId, $schoolYear, $semester);
                 $logStmt->execute();
 
                 $_SESSION['notification'] = [
@@ -65,11 +68,11 @@ if (isset($_POST['approve']) || isset($_POST['reject'])) {
             if ($stmt->execute()) {
                 // Log successful update
                 $logEventType = "Equipment Request";
-                $logEventDescription = "Ticket No $ticketNo status updated to $newStatus (approved) by Admin ID $adminId";
+                $logEventDescription = "Ticket No $ticketNo status updated to $newStatus by Admin: $name ";
 
-                $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id) VALUES (?, ?, ?)';
+                $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id, school_year, semester) VALUES (?, ?, ?, ?, ?)';
                 $logStmt = $conn->prepare($logSql);
-                $logStmt->bind_param('sss', $logEventType, $logEventDescription, $adminId);
+                $logStmt->bind_param('sssss', $logEventType, $logEventDescription, $adminId, $schoolYear, $semester);
                 $logStmt->execute();
 
                 $_SESSION['notification'] = [
