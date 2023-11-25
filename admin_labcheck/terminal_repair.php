@@ -110,7 +110,7 @@
                                 <div class="action-flex">
                                 <form action="../includes/process_terminal_repair.php" method="post" class="approval-form"  onsubmit="return confirmResolved()">
                                 <input type="hidden" name="request_id" value="<?php echo $row['request_id']; ?>">
-                                <button type="submit" name="resolve">Resolved</button>
+                                <button type="submit" name="resolved">Resolved</button>
                                 </form>
 
                                 <form action="../includes/process_terminal_repair.php" method="post" class="rejection-form">
