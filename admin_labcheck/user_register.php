@@ -18,7 +18,8 @@ try {
 
     $sql = 'SELECT id, firstname, lastname, middlename, section, user_type
             FROM user_registration
-            WHERE school_year = ? AND SEMESTER = ?';
+            WHERE school_year = ? AND SEMESTER = ?
+            ORDER BY created_at DESC';
     
     $stmt = $conn->prepare($sql);   
     $stmt->bind_param('ss', $schoolYear, $semester);

@@ -4,11 +4,15 @@ session_start();
 if (isset($_POST['resolved']) || isset($_POST['reject'])) {
     $requestId = $_POST['request_id'];
 
+    date_default_timezone_set('Asia/Manila'); 
+    $currentDateTime = new DateTime();
+    $FormattedDateTime = $currentDateTime->format('m/d/y h:ia');
+
     if (isset($_POST['resolved'])) {
         $newStatus = 'resolved';
     } elseif (isset($_POST['reject'])) {
         $newStatus = 'reject';
-        $rejectReason = $_POST['rejection_reason'];
+        $rejectReason = $_POST['rejection_reason'] . ". " . $FormattedDateTime;
     }
 
     $requestType = "repair";
@@ -20,7 +24,7 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
     $schoolYear = $_SESSION['school_year'];
     $semester = $_SESSION['semester'];
     
-    $feedbackDone = "DONE";
+    
     // Fetch the ticket_no from the database
     $ticketNo = null;
     $stmtFetchTicket = $conn->prepare('SELECT ticket_no FROM request WHERE request_id = ?');
@@ -30,8 +34,13 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
     $stmtFetchTicket->fetch();
     $stmtFetchTicket->close();
 
+    
+
+    $feedbackDone = "DONE($formattedDateTime)";
     if ($newStatus === 'reject') {
-        if ($stmt = $conn->prepare('UPDATE request SET status = ?, feedback = ? WHERE request_id = ? AND request_type = ?')) {
+        if ($stmt = $conn->prepare("UPDATE request 
+        SET status = ?, feedback = CONCAT(COALESCE(feedback, ''), ?) 
+        WHERE request_id = ? AND request_type = ?;")) {
             $stmt->bind_param('ssis', $newStatus, $rejectReason, $requestId, $requestType);
 
             if ($stmt->execute()) {
@@ -62,9 +71,9 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
             ];
         }
     } elseif ($newStatus === 'resolved') {
-        if ($stmt = $conn->prepare('UPDATE request SET status = ?, feedback = ? WHERE request_id = ? AND request_type = ?')) {
+        if ($stmt = $conn->prepare("UPDATE request SET status = ?, feedback = CONCAT(COALESCE(feedback, ''), ?) WHERE request_id = ? AND request_type = ?")) {
             $stmt->bind_param('ssis', $newStatus, $feedbackDone, $requestId, $requestType);
-
+                
             if ($stmt->execute()) {
                 // Log successful update
                 $logEventType = "Repair Request";
@@ -76,7 +85,7 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
                 $logStmt->execute();
 
                 $_SESSION['notification'] = [
-                    'message' => 'Successfully approved the request',
+                    'message' => 'Successfully resolved the request',
                     'type' => 'success',
                 ];
             } else {
@@ -94,7 +103,7 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
         }
     }
 
-    header("Location: ../admin_labcheck/request_equipment.php");
+    header("Location: ../admin_labcheck/terminal_repair.php");
     $conn->close();
 }
 ?>

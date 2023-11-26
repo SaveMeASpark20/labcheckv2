@@ -145,10 +145,11 @@ $page = "ComLab Schedule";
                             eventClick: function (event) {
                             if (confirm("Are you sure you want to remove it?")) {
                                 var id = event.id;
+                                var title = event.title;
                                 $.ajax({
                                     url: "complab_schedule/delete.php",
                                     type: "POST",
-                                    data: { id: id },
+                                    data: { id: id, title: title },
                                     success: function () {
                                         // Remove the event from the calendar's view
                                         calendar.fullCalendar('removeEvents', id);

@@ -9,24 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_POST["submit_request"])) {
     $date = $_POST["date"];
     $room = intval($_POST["room"]);
 
-    if($requestType !== 'repair' && empty($timeEnd))
-    echo $requestType;
-
-
-    if($requestType != 'repair' && empty($timeEnd)) {
-        $_SESSION['notification'] = [
-            'message' => 'All Fields are required',
-            'type' => 'error' 
-        ];
-        header("Location: ../make_a_request.php");
-        exit();
-    }
-
-    if($timeEnd === '') {
-        $timeEnd = NULL;
-    }
-
-    if(empty($requestType)|| empty($timeStart) || empty($date) || empty($room) || empty($description)) {
+    if(empty($requestType)|| empty($timeStart) || empty($timeEnd) || empty($date) || empty($room) || empty($description)) {
         $_SESSION['notification'] = [
             'message' => 'All Fields are required',
             'type' => 'error' 
@@ -57,16 +40,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_POST["submit_request"])) {
     }
 
     $sql = "INSERT INTO request (user_id, ticket_no, name, description, time, time_end, date, room_id, request_type, school_year, semester) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
-    // Use prepared statement to prevent SQL injection
+  
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssssisss", $userid, $formattedNumber, $name, $description, $timeStart, $timeEnd, $date, $room, $requestType,  $schoolYear, $semester);
 
     if ($stmt->execute()) {
-        // User added successfully
+  
         $_SESSION['notification'] = [
             'message' => 'Add request successfully',
             'type' => 'success' 
         ];
+        
     } else {
         $_SESSION['notification'] = [
             'message' => 'request failed. Try again later',

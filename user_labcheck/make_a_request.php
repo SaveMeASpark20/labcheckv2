@@ -53,9 +53,9 @@
                 <textarea name="description" placeholder="Description of your request" required></textarea> 
                 <div class="time-date">
                     <div class="time">
-                        <label>Time : </label>
+                        <label>Time Needed : </label>
                         <input type="time" name="time-start" ></input>
-                        <input type="time" name="time-end" id="timeEndInput"></input>
+                        <input type="time" name="time-end"></input>
                     </div>
                     <input type="date" name="date" required></input>
                 </div>
