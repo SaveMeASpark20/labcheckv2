@@ -34,6 +34,7 @@ nav{
     align-items: center;
     padding: 10px;
     width: 100%;
+    gap: 10px;
 }
 
 main{
@@ -82,8 +83,8 @@ main{
 }
 
 .logo {
-  width: 90%;
-  margin: 5px;
+  width: 80%;
+
 }
 
 .labcheck-logo {
@@ -131,6 +132,11 @@ main{
     position: relative;
   }
   
+  .password-has{
+    font-size: 10px;
+    color: #e23100;
+  }
+
   .input-container input, .form button {
     outline: none;
     border: 1px solid #e5e7eb;
@@ -170,15 +176,28 @@ main{
     cursor: pointer;
   }
  
-  @media(max-width: 700px) {
-    .logo-title {
-      font-size: 38px;
-      font-weight: bold;
-  
+@media(max-width: 700px) {
+  .logo-title {
+    font-size: 38px;
+    font-weight: bold;
+
   }
-  
+
   .logo-description{
-      font-size: 9px;
-      text-align: justify;
+    font-size: 9px;
+    text-align: justify;
   }
+}
+
+@media(max-width: 400px) {
+  .logo-title {
+    font-size: 30px;
+    font-weight: bold;
+
   }
+
+  .logo-description{
+    font-size: 7px;
+    text-align: justify;
+  }
+}

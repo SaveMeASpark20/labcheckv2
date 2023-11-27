@@ -84,7 +84,7 @@
                         $time = strtotime($row['time']);
                         $formattedTime = date("g:i A", $time);
                         $time_end = strtotime($row['time_end']);
-                        $formattedEndTime = $time_end !== false ? date("g:i A", $time_end) : ' ';
+                        $formattedEndTime = date("g:i A", $time_end);
                         $date = strtotime($row['date']);
                         $formattedDate = date("F j, Y ", $date);
                         $schoolYear = $row['school_year'];

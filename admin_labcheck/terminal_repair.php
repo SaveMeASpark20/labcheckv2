@@ -15,7 +15,7 @@
 
     try {
         require_once "../connection/database.php";
-        $sql='SELECT r.request_id, r.user_id, r.ticket_no, r.name, r.description, r.time, r.date, r.room_id, r.feedback, r.school_year, r.semester
+        $sql='SELECT r.request_id, r.user_id, r.ticket_no, r.name, r.description, r.time, r.time_end, r.date, r.room_id, r.feedback, r.school_year, r.semester
         FROM request r
         JOIN academic_year ay
         ON r.school_year = ay.school_year AND r.semester = ay.semester
@@ -65,7 +65,8 @@
                         <th>Ticket No.</th>
                         <th>Room No.</th>
                         <th>Description</th>
-                        <th>Time Start</th>
+                        <th>Time Needed</th>
+                        <th>Time End</th>
                         <th>Date Needed</th>
                         <th>Action</th>
 
@@ -81,7 +82,8 @@
                         <?php
                             $time = strtotime($row['time']);
                             $formattedTime = date("g:i A", $time);
-                            
+                            $time_end = strtotime($row['time_end']);
+                            $formattedEndTime = date("g:i A", $time_end);
                             $date = strtotime($row['date']);
                             $formattedDate = date("F j, Y ", $date);
                             $schoolYear = $row['school_year'];
@@ -104,19 +106,26 @@
                             <td data-cell="Ticket No"><?php echo htmlspecialchars($row['ticket_no']); ?></td>
                             <td data-cell="Room No"><?php echo htmlspecialchars($row['room_id']); ?></td>
                             <td data-cell="Description"><?php echo  htmlspecialchars(ucwords($row['description'])); ?></td>
-                            <td data-cell="Time Start"><?php echo $formattedTime; ?></td>
+                            <td data-cell="Time Needed"><?php echo $formattedTime; ?></td>
+                            <td data-cell="Time End"><?php echo $formattedEndTime; ?></td>
                             <td data-cell="Date Start"><?php echo $formattedDate; ?></td>
                             <td data-cell="Action">
                                 <div class="action-flex">
-                                <form action="../includes/process_terminal_repair.php" method="post" class="approval-form"  onsubmit="return confirmResolved()">
-                                <input type="hidden" name="request_id" value="<?php echo $row['request_id']; ?>">
-                                <button type="submit" name="resolved">Resolved</button>
-                                </form>
+                                    <form action="../includes/process_terminal_repair.php" method="post" class="approval-form"  onsubmit="return confirmResolved()">
+                                        <input type="hidden" name="request_id" value="<?php echo $row['request_id']; ?>">
+                                        <button type="submit" name="resolved">Resolved</button>
+                                    </form>
 
-                                <form action="../includes/process_terminal_repair.php" method="post" class="rejection-form">
-                                    <input type="hidden" name="request_id" value="<?php echo $row['request_id']; ?>">
-                                    <button type="button" onclick="showRejectionReason(this)">Reject</button>
-                                </form>
+                                    <div class="feedback-form">
+                                        <input type="hidden" name="request_id" value="<?php echo $row['request_id']; ?>">
+                                        <button type="button" onclick="showFeedback(this)" id="feedback-button">Feedback</button>
+                                    </div>
+
+                                    <form action="../includes/process_terminal_repair.php" method="post" class="rejection-form">
+                                        <input type="hidden" name="request_id" value="<?php echo $row['request_id']; ?>">
+                                        <button type="button" onclick="showRejectionReason(this)">Reject</button>
+                                    </form>
+                                    
                                 </div>
                             </td>
                         </tr>
@@ -134,6 +143,18 @@
             <input type="hidden" name="request_id" value="">
             <textarea id="rejection_reason" name="rejection_reason" placeholder="Enter rejection reason" required></textarea>
             <input type="submit" name="reject"/>
+        </form>
+    </div>
+</div>
+
+<div id="feedbackModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeFeedbackModal">&times;</span>
+        <h2 style="color:black;">Feedback</h2>
+        <form action="../includes/process_feedback_repair.php" method="POST" class="modal-feedback-form">
+            <input type="hidden" name="request_id" value="">
+            <textarea id="feedback" name="feedback_message" placeholder="Enter feedback" required></textarea>
+            <input type="submit" name="feedback"/>
         </form>
     </div>
 </div>

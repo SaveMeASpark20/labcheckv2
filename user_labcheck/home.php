@@ -61,8 +61,7 @@
         </div>
         <small><?=$schoolYear?> <?=$semester?></small>
     </div>
-    <div class="home-page">
-    
+    <div class="home-page">    
         <section class="request">
             <section class="header">
                 <div class="requestheader-legend">

@@ -134,7 +134,7 @@ main h3{
     align-items: center;
     cursor: pointer;
     position: absolute;
-    top: 2rem;
+    top: 1.5rem;
     right: 1rem;
 }
 
@@ -153,7 +153,6 @@ main h3{
     display: flex;
     align-items: center;
     gap: 10px;
-    width: 100%;
 }
 
 .logo-row {
@@ -204,15 +203,10 @@ main h3{
         grid-template-columns: 1fr;
     }
 
-
-    .logo {
-        width: 60%;
+    .logo-row {
         padding: 10px 0;
-      }
-      
-    .labcheck-logo {
-        width: 70%;
     }
+
 }
 
 @media screen and (max-width: 700px) {
@@ -236,22 +230,23 @@ main h3{
         text-align: justify;
     }
 
-    .logo {
-        width: 50%;
-        padding: 10px 0;
-      }
-      
-    .labcheck-logo {
-        width: 50%;
-    }
 }
 
 @media screen and (max-width: 400px) {
     .main-text {
         font-size: 5rem;
     }
-
     
+    .logo-title {
+        font-size: 30px;
+        font-weight: bold;
+    
+    }
+    
+    .logo-description{
+        font-size: 7px;
+        text-align: justify;
+    }
     
 }
 

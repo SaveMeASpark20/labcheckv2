@@ -111,14 +111,14 @@ function confirmApproval() {
 function confirmResolved() {
     return confirm("Are you sure you want to mark this request as resolved?");
 }
-//show rejection button and text-area
-function showRejectionReason(button) {
+// //show rejection button and text-area
+// function showRejectionReason(button) {
 	
-    const rejectionForm = button.closest(".rejection-form");
+//     const rejectionForm = button.closest(".rejection-form");
 
-    const rejectReason = rejectionForm.querySelector(".reject-reason");
-    rejectReason.style.display = "block";
-}
+//     const rejectReason = rejectionForm.querySelector(".reject-reason");
+//     rejectReason.style.display = "block";
+// }
 
 
 // SIDEBAR DROPDOWN
@@ -379,6 +379,34 @@ window.addEventListener('click', function(event) {
     var modal = document.getElementById('rejectionModal');
     if (event.target == modal) {
         closeModal();
+    }
+});
+
+function showFeedback(button) {
+    // Get the parent form element
+    var parent = button.closest('.feedback-form');
+    
+    // Get the request_id from the hidden input field
+    var requestId = parent.querySelector('input[name="request_id"]').value;
+
+    // Set the request_id in the modal form
+    document.getElementById('feedbackModal').querySelector('input[name="request_id"]').value = requestId;
+
+    // Show the modal
+    document.getElementById('feedbackModal').style.display = 'block';
+}
+function closeFeedbackModal() {
+    document.getElementById('feedbackModal').style.display = 'none';
+}
+
+if(document.getElementById('closeFeedbackModal')){
+    document.getElementById('closeFeedbackModal').addEventListener('click', closeFeedbackModal);
+}
+
+window.addEventListener('click', function(event) {
+    var modal = document.getElementById('feedbackModal');
+    if (event.target == modal) {
+        closeFeedbackModal();
     }
 });
 

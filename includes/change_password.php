@@ -5,44 +5,58 @@ if(isset($_POST["changepassword"])){
     $password = $_POST['password'];
     $comfirmpassword = $_POST['comfirm-password'];
 
-    // Validation: Check for empty fields and password match
-    if (empty($comfirmpassword) || empty($password)) {              
-        $message = "Password and confirm-password are required";  
-        header("Location: ../changepass.php?message=" . urlencode($message));
+    function handleNotification($type, $message) {
+        $_SESSION['notification'] = ['type' => $type, 'message' => $message];
+    }
+
+    if (empty($comfirmpassword) || empty($password)) {
+        handleNotification('error', 'All fields are required');              
+        header("Location: ../changepass.php");
         exit();
     }
 
     if($password !== $comfirmpassword) {
         $message = "Password does not match confirm-password";
-        header("Location: ../changepass.php?message=" . urlencode($message));
+        handleNotification('error', 'Password does not match to comfirm password');
+        header("Location: ../changepass.php");
+        exit();
+    }
+
+    function checkPassword($password) {
+        return strlen($password) >= 8 && preg_match('/[@_!#$%^&*()<>?\/\|}{~:]/', $password) && preg_match('/[A-Z]/', $password);
+    }
+
+    if(!checkPassword($password)){
+        handleNotification('error', 'Password needs to be 8 characters above,  has atleast 1 capital letter, and has special character');
+        header("Location: ../changepass.php");
         exit();
     }
 
     require_once '../connection/database.php';
 
-    // Use prepared statements to prevent SQL injection
+
     if ($stmt = $conn->prepare('UPDATE user_registration SET password = ? WHERE id = ?')) {
-        // Hash the new password before storing it in the database
+
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
         $stmt->bind_param('ss', $hashedPassword, $userid);
         
         if ($stmt->execute()) {
             // Update successful
-            $message = "Password updated successfully.";
-            header("Location: ../index.php?message=" . urlencode($message));
+            handleNotification('success', 'Change Password Successfully');
+            header("Location: ../index.php");
             exit();
         } else {
             // Error occurred during the update
-            $message = "Error: " . $stmt->error;
-            header("Location: ../changepass.php?message=" . urlencode($message));
+            handleNotification('error', 'Something wrong happened');
+            header("Location: ../changepass.php");
             exit();
         }
 
         $stmt->close();
     } else {
-        $message = "Error: " . $conn->error;
-        header("Location: ../changepass.php?message=" . urlencode($message));
+        handleNotification('error', $conn->error);
+        header("Location: ../changepass.php");
     }
 
     $conn->close();

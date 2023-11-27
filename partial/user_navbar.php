@@ -5,8 +5,8 @@
                 <img src="../images/labcheck_logo.png" class="labcheck-logo">
             </div>
             <div class="logo-container">
-                <span class="logo-title"> LabCheck</span>
-                <span class="logo-description"> A Computer Laboratory Monitoring System</span>
+                <p class="logo-title"> LabCheck</p>
+                <p class="logo-description"> A Computer Laboratory Monitoring System</p>
             </div>
             <div class="logo-image">
                 <img src="../images/udm_logo.png" alt="udm_logo" class="logo">
