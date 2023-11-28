@@ -2,10 +2,10 @@
 <div id="addAcadForm" class="hide">
     <div class="add-modal-content">
         <span class="close"  onclick="closeAddAcadYearModal()">&times;</span>
-        <h2>Add School Year</h2>
+        <h2>Add Academic Year</h2>
         <form id="" action="../includes/addacadsyear.php" method="post">
   
-            <label for="schoolyear">School Year:</label>
+            <label for="schoolyear">Academic Year:</label>
             <input type="text" id="schoolyear" name="school_year" placeholder="2023-2024" required>
 
             <label for="semester">Semester:</label>

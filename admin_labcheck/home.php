@@ -85,14 +85,6 @@ try {
             FROM announcement
             ORDER BY created_at DESC";
 
-
-    // $sql='SELECT a.name, a.subject, a.description, a.created_at
-    //     FROM announcement a
-    //     JOIN academic_year ay
-    //     ON a.school_year = ay.school_year AND a.semester = ay.semester
-    //     WHERE ay.status = 1
-    //     ORDER BY a.created_at DESC';
-    
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -148,7 +140,7 @@ try {
 				</ul>
 			</li>
             <li><a href="settings.php"><i class='fa fa-cog icon' ></i> Settings</a></li>
-            <li><a href="system_logs.php"><i class='fa fa-cog icon' ></i> System Logs</a></li>
+            <li><a href="system_logs.php"><i class='fa fa-tags icon' ></i> System Logs</a></li>
             <li><a href="../includes/logout.php"><i class='fa fa-sign-out icon' ></i> Logout</a></li>
 		</ul>
 	</section>

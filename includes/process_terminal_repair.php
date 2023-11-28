@@ -6,13 +6,13 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
 
     date_default_timezone_set('Asia/Manila'); 
     $currentDateTime = new DateTime();
-    $FormattedDateTime = $currentDateTime->format('m/d/y h:ia');
+    $formattedDateTime = $currentDateTime->format('m/d/y h:ia');
 
     if (isset($_POST['resolved'])) {
         $newStatus = 'resolved';
     } elseif (isset($_POST['reject'])) {
         $newStatus = 'reject';
-        $rejectReason = $_POST['rejection_reason'] . ". " . $FormattedDateTime;
+        $rejectReason = $_POST['rejection_reason'] . ". " . $formattedDateTime;
     }
 
     $requestType = "repair";
@@ -34,7 +34,7 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
     $stmtFetchTicket->fetch();
     $stmtFetchTicket->close();
 
-    
+
 
     $feedbackDone = "DONE($formattedDateTime)";
     if ($newStatus === 'reject') {
