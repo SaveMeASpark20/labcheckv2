@@ -38,9 +38,7 @@
 				</ul>
 			</li>
             <li><a href="settings.php"><i class='fa fa-cog icon' ></i> Settings</a></li>
-			<li><a href="system_logs.php"><i class='fa fa-cog icon' ></i> System Logs</a></li>
+			<li><a href="system_logs.php"><i class='fa fa-tags icon' ></i> System Logs</a></li>
             <li><a href="../includes/logout.php"><i class='fa fa-sign-out icon' ></i> Logout</a></li>
 		</ul>
 	</section>
-	</body>
-</html>
