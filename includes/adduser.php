@@ -5,6 +5,9 @@ if (!isset($_SESSION["admin"])) {
     exit();
 }
 
+
+$adminName = $_SESSION['name'];
+
 require_once "../connection/database.php";
 
 function handleNotification($type, $message) {
@@ -37,6 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $schoolYear = $_SESSION['school_year'];
     $semester = $_SESSION['semester'];
     
+    date_default_timezone_set('Asia/Manila'); 
+    $currentDateTime = date('Y-m-d H:i:s');
+
     try {
         // Insert user data into user_registration table
         $insertQuery = "INSERT INTO user_registration (firstname, lastname, middlename, id, section, password, user_type, school_year, semester) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -48,11 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $adminId = $id;
             // Log successful user registration
             $logEventType = "User Registration";
-            $logEventDescription = "User registration for $firstname $lastname (ID: $uid) created by $adminId";
+            $logEventDescription = "User registration for $firstname $lastname (ID: $uid) created by $adminName";
 
-            $sql = 'INSERT INTO system_logs (event_type, event_description, admin_id, school_year, semester) VALUES (?, ?, ?, ?, ?)';
+            $sql = 'INSERT INTO system_logs (event_type, event_description, admin_id, created_at, school_year, semester) VALUES (?, ?, ?, ?, ?, ?)';
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('sssss', $logEventType, $logEventDescription, $adminId, $schoolYear, $semester);
+            $stmt->bind_param('ssssss', $logEventType, $logEventDescription, $adminId, $currentDateTime, $schoolYear, $semester);
             $stmt->execute();
 
             handleNotification('success', 'User Successfully Added');

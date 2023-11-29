@@ -49,12 +49,11 @@ header {
 
 
 .logo {
-    width: 80%;
+    width: 10%;
   }
   
 .labcheck-logo {
-    width: 90%;
-    margin-left: 1rem;
+    width: 10%;
 }
   
 .logo-container {
@@ -134,7 +133,7 @@ main h3{
     align-items: center;
     cursor: pointer;
     position: absolute;
-    top: 1.5rem;
+    top: 1rem;
     right: 1rem;
 }
 
@@ -153,6 +152,7 @@ main h3{
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-left: 10px;
 }
 
 .logo-row {
@@ -163,6 +163,14 @@ main h3{
 .logo-image {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+}
+
+.logo-image-udm {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 0;
 }
 .active-link {
     background: rgb(235, 200, 0);
@@ -232,6 +240,21 @@ main h3{
 
 }
 
+@media(max-width:500px) {
+	.logo-title {
+        font-size: 30px;
+        font-weight: bold;
+    
+    }
+    
+    .logo-description{
+        font-size: 8px;
+        text-align: justify;
+    }
+
+
+}
+
 @media screen and (max-width: 400px) {
     .main-text {
         font-size: 5rem;
@@ -247,6 +270,15 @@ main h3{
         font-size: 7px;
         text-align: justify;
     }
+
+    /* .logo {
+        width: 50%;
+    }
     
+    .labcheck-logo {
+        width: 60%;
+        display: flex;
+        justify-content: flex-end;
+    } */
 }
 

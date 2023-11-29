@@ -33,6 +33,8 @@
         die('Database error: ' . $e->getMessage());
     }
 
+    
+
     require "NotificationManager.php";
     $NotificationManager = new NotificationManager();
     $notifications = $NotificationManager->getNotifications();

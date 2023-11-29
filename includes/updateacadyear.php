@@ -70,6 +70,11 @@ function updateUsers($conn, $school_year, $semester,  $action) {
     $stmtUpdate->bind_param("ss", $school_year, $semester);
 
     if ($stmtUpdate->execute()) {
+
+        session_regenerate_id();
+        $_SESSION['school_year'] = $school_year;
+        $_SESSION['semester'] = $semester;
+
         $_SESSION['notification'] = [
             'message' => "Successfully $action the school year and semester of all users.",
             'type' => 'success'

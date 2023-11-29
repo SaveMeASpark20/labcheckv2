@@ -312,8 +312,8 @@ section h3{
     
 
     #searchInput {
-        width: 120px;
-        font-size: 10px;
+        width: 90px;
+        font-size: 8px;
     }
 
     .announcement-row {
@@ -324,7 +324,7 @@ section h3{
 @media (max-width: 450px) {
 
     #searchInput {
-        width: 90px;
-        font-size: 8px;
+        width: 60px;
+        font-size: 6px;
     }
 }

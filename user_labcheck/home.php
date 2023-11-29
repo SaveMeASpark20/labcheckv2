@@ -1,15 +1,33 @@
 <?php   
-    session_start();
-    if (!isset($_SESSION['userid'])) {
-        header("Location: ../index.php");
-        exit();
-    }
-    
-    $userid = $_SESSION['userid'];
-    $schoolYear = $_SESSION['school_year'];
-    $semester = $_SESSION['semester'];
+session_start();
+if (!isset($_SESSION['userid'])) {
+    header("Location: ../index.php");
+    exit();
+}
 
-    require_once "../connection/database.php";
+$userid = $_SESSION['userid'];
+
+require_once "../connection/database.php";
+
+try {
+    $sql = 'SELECT school_year, semester FROM user_registration WHERE id = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $userid);
+    $stmt->execute();
+    $stmt->bind_result($schoolYear, $semester);
+    $stmt->fetch();
+    $stmt->close(); 
+} catch (Exception $e) {
+    // Handle database errors here.
+    die('Database error: ' . $e->getMessage());
+}
+
+if ($_SESSION['school_year'] !== $schoolYear || $_SESSION['semester'] !== $semester) {
+    session_regenerate_id();
+    $_SESSION['school_year'] = $schoolYear;
+    $_SESSION['semester'] = $semester;
+}
+
     
     try {
         $sql='SELECT request_id, request_type, ticket_no, description, time, time_end, date, room_id, status, feedback FROM request WHERE user_id = ? AND school_year = ? AND semester = ? ORDER BY request_id DESC';
@@ -22,22 +40,20 @@
         die('Database error: ' . $e->getMessage());
     }
 
-    //this can be optimize i just dont see why i can't
-    try{
-        $sql='SELECT a.name, a.subject, a.description, a.created_at
-        FROM announcement a
-        JOIN academic_year ay
-        ON a.school_year = ay.school_year AND a.semester = ay.semester
-        WHERE ay.status = 1
-        ORDER BY a.created_at DESC';
+    try {
+        require_once "../connection/database.php";
+        $sql = "SELECT name, subject, description, created_at
+                FROM announcement
+                ORDER BY created_at DESC";
     
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $resultAnnouncement = $stmt->get_result();
-    }catch (Exception $e) {
-    // Handle database errors here.
-    die('Database error: ' . $e->getMessage());
-    }
+    } catch (Exception $e) {
+        // Handle database errors here.
+        die('Database error: ' . $e->getMessage());
+    }  
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +101,7 @@
                     $formattedTime = date("h:i A", $time);
                     $status = $row['status'];
                     $color='';
-                    if($status === 'accept'){
+                    if($status === 'approve' OR $status ==='resolved'){
                         $color = '#006d1b';
                     }
                     else if($status === 'reject'){

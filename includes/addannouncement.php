@@ -15,18 +15,23 @@ if (isset($_POST['submit-announcement'])) {
     $schoolYear = $_SESSION['school_year'];
     $semester = $_SESSION['semester'];
 
-        $sql = "INSERT INTO announcement(user_id, name, subject, description, created_at, school_year, semester) VALUES (?, ?, ?, ?, NOW(), ?, ?)";
+    date_default_timezone_set('Asia/Manila'); 
+
+    // Get the current date and time
+    $currentDateTime = date('Y-m-d H:i:s');
+
+        $sql = "INSERT INTO announcement(user_id, name, subject, description, created_at, school_year, semester) VALUES (?, ?, ?, ?, ?, ?, ?)";
         if($stmt = $conn->prepare($sql)){
-            $stmt->bind_param("ssssss", $adminid, $name, $subject, $description,  $schoolYear, $semester);
+            $stmt->bind_param("sssssss", $adminid, $name, $subject, $description, $currentDateTime, $schoolYear, $semester);
 
             if ($stmt->execute()) {
                 $_SESSION['notification'] = [
-                    'message' => 'Successfully added the school year and semester.',
+                    'message' => 'Successfully Post an Announcement.',
                     'type' => 'success' 
                 ];
             } else {
                 $_SESSION['notification'] = [
-                    'message' => "Failed to add the school year and semester.",
+                    'message' => "Failed to Post an Announcement.",
                     'type' => 'error' 
                 ];
             }
