@@ -45,7 +45,7 @@
                 <div class="request-row">
                     <h3>Make a Request: </h3>
                     <select name="request_type" placeholder="Make a request" required onchange="toggleTimeEnd()" id="option-request">
-                        <option value="comlab usage">Computer Usage</option>
+                        <option value="comlab usage">Comlab Usage</option>
                         <option value="repair">Repair</option>
                         <option value="equipment">Equipment</option>
                     </select>

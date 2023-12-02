@@ -36,8 +36,6 @@ try {
         }
     }
     
-
-    
     $comlabUsageTotalCount = getTotalCount($conn, 'request', 'comlab usage', $schoolYear,  $semester);
     $requestEquipmentTotalCount = getTotalCount($conn, 'request', 'equipment', $schoolYear,  $semester);
     $terminalRepairTotalCount = getTotalCount($conn, 'request', 'repair', $schoolYear,  $semester);

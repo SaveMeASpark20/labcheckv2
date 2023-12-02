@@ -1,8 +1,13 @@
 <?php
     session_start();
-    // if (isset($_SESSION['usertype'])) {
+    // if (isset($_SESSION['adminid'])) {
     // header("Location: admin_labcheck/home.php");
     // exit();
+    // }
+
+    // if(isset($_SESSION['userid'])) {
+    //     header("LOcation: user_labcheck/home.php");
+    //     exit();
     // }
 
     require "notification/NotificationManager.php";

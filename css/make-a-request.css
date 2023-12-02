@@ -33,6 +33,7 @@ textarea {
 .time-date {
     display: flex;
     gap: 5px;
+    flex-wrap: wrap;
 }
 .time-date input {
     flex: 1;
@@ -97,4 +98,11 @@ textarea {
 
 .time {
   margin-right: 10px;
+}
+
+@media (max-width: 500px) {
+  .time-date{
+
+    flex-direction: column;
+  }
 }

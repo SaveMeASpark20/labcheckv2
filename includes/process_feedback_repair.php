@@ -11,6 +11,10 @@ if (isset($_POST['feedback'])) {
     $schoolYear = $_SESSION['school_year'];
     $semester = $_SESSION['semester'];
 
+    date_default_timezone_set('Asia/Manila'); 
+
+    $currentDateTime = date('Y-m-d H:i:s');
+
     require_once '../connection/database.php';
 
     $ticketNo = null;
@@ -29,9 +33,9 @@ if (isset($_POST['feedback'])) {
             $logEventType = "Repair Request Feedback";
             $logEventDescription = "Ticket No $ticketNo feedback send: $feedback by Admin: $name";
             
-            $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id, school_year, semester) VALUES (?, ?, ?, ?, ?)';
+            $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id, created_at, school_year, semester) VALUES (?, ?, ?, ?, ?, ?)';
             $logStmt = $conn->prepare($logSql);
-            $logStmt->bind_param('sssss', $logEventType, $logEventDescription, $adminId, $schoolYear, $semester);
+            $logStmt->bind_param('ssssss', $logEventType, $logEventDescription, $adminId, $currentDateTime, $schoolYear, $semester);
             $logStmt->execute();
 
             $_SESSION['notification'] = [

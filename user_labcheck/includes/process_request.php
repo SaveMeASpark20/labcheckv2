@@ -22,10 +22,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_POST["submit_request"])) {
     include_once "../../connection/database.php";
 
     $userid = $_SESSION['userid']; 
-    $schoolYear = $_SESSION['school_year'];
-    $semester = $_SESSION['semester'];
     $name = $_SESSION['name'];
     
+    try {
+        $sql = 'SELECT school_year, semester FROM user_registration WHERE id = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $userid);
+        $stmt->execute();
+        $stmt->bind_result($schoolYear, $semester);
+        $stmt->fetch();
+        $stmt->close(); 
+    } catch (Exception $e) {
+        // Handle database errors here.
+        die('Database error: ' . $e->getMessage());
+    }
+    
+    if ($_SESSION['school_year'] !== $schoolYear || $_SESSION['semester'] !== $semester) {
+        session_regenerate_id();
+        $_SESSION['school_year'] = $schoolYear;
+        $_SESSION['semester'] = $semester;
+    }
+
     $unique = false;
     while (!$unique) {
         $randomNumber = mt_rand(0, 999999); 

@@ -24,6 +24,8 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
     $schoolYear = $_SESSION['school_year'];
     $semester = $_SESSION['semester'];
     
+    date_default_timezone_set('Asia/Manila'); 
+    $currentDateTime = date('Y-m-d H:i:s');
     
     // Fetch the ticket_no from the database
     $ticketNo = null;
@@ -48,9 +50,9 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
                 $logEventType = "Repair Request";
                 $logEventDescription = "Ticket No $ticketNo status updated to $newStatus with reason: $rejectReason by Admin: $name";
 
-                $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id, school_year, semester) VALUES (?, ?, ?, ?, ?)';
+                $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id, created_at, school_year, semester) VALUES (?, ?, ?, ?, ?, ?)';
                 $logStmt = $conn->prepare($logSql);
-                $logStmt->bind_param('sssss', $logEventType, $logEventDescription, $adminId, $schoolYear, $semester);
+                $logStmt->bind_param('ssssss', $logEventType, $logEventDescription, $adminId, $currentDateTime, $schoolYear, $semester);
                 $logStmt->execute();
 
                 $_SESSION['notification'] = [
@@ -79,9 +81,9 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
                 $logEventType = "Repair Request";
                 $logEventDescription = "Ticket No $ticketNo status updated to $newStatus by Admin: $name ";
 
-                $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id, school_year, semester) VALUES (?, ?, ?, ?, ?)';
+                $logSql = 'INSERT INTO system_logs (event_type, event_description, admin_id, created_at, school_year, semester) VALUES (?, ?, ?, ?, ?, ?)';
                 $logStmt = $conn->prepare($logSql);
-                $logStmt->bind_param('sssss', $logEventType, $logEventDescription, $adminId, $schoolYear, $semester);
+                $logStmt->bind_param('ssssss', $logEventType, $logEventDescription, $adminId, $currentDateTime, $schoolYear, $semester);
                 $logStmt->execute();
 
                 $_SESSION['notification'] = [
