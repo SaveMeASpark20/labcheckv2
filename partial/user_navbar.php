@@ -8,10 +8,9 @@
                 <p class="logo-title"> LabCheck</p>
                 <p class="logo-description"> A Computer Laboratory Monitoring System</p>
             </div>
-            
                 <img src="../images/udm_logo.png" alt="udm_logo" class="logo">
             
-        </div>
+       
         <div class="bars">
             <span class="bar"></span>
             <span class="bar"></span>

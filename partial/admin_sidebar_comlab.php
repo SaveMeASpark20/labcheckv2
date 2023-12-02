@@ -41,4 +41,3 @@
             <li><a href="../includes/logout.php"><i class='fa fa-sign-out icon' ></i> Logout</a></li>
 		</ul>		
 	</section>
-	</body>

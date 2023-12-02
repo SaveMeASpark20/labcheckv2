@@ -54,7 +54,10 @@ header {
   
 .labcheck-logo {
     width: 10%;
-}
+
+  }
+  
+
   
 .logo-container {
     display: flex;
@@ -271,14 +274,5 @@ main h3{
         text-align: justify;
     }
 
-    /* .logo {
-        width: 50%;
-    }
-    
-    .labcheck-logo {
-        width: 60%;
-        display: flex;
-        justify-content: flex-end;
-    } */
 }
 
