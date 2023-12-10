@@ -40,21 +40,3 @@ if (window.location.href.includes('home')) {
 
     filterResults();                                                    
 }
-
-
-if (window.location.href.includes('make_a_request')) {
-    
-    function toggleTimeEnd() {
-        var requestType = document.getElementById("option-request").value;
-        var timeEndInput = document.getElementById("timeEndInput");
-
-        if (requestType === "repair") {
-            timeEndInput.classList.add("hidden");
-        } else {
-            timeEndInput.classList.remove("hidden");
-        }
-    }
-
-    // Call the function on page load to set the initial state
-    toggleTimeEnd();
-}

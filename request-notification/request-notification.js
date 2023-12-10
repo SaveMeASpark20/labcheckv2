@@ -44,7 +44,7 @@ async function updateIndicators() {
     }
 }
 
-setInterval(updateIndicators, 5000);
+setInterval(updateIndicators, 500000);
 
 //Function to update the notify status and indicator
 async function updateNotifyStatusAndIndicator(category) {

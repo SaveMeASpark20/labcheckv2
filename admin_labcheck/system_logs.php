@@ -24,7 +24,7 @@ try {
     FROM system_logs s
     JOIN academic_year ay ON s.school_year = ay.school_year AND s.semester = ay.semester
     WHERE ay.status = 1
-    ORDER BY s.school_year DESC, s.semester DESC, s.created_at " . ($sortOrder == 'newest' ? 'DESC' : 'ASC');
+    ORDER BY s.school_year DESC, s.semester DESC, s.created_at " . ($sortOrder == 'newest' ? 'DESC' : 'ASC') . ";";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -73,7 +73,7 @@ $notifications = $NotificationManager->getNotifications();
                 </tr>
             </thead>
             <tbody id="reportTable" class="table-body">
-                <?php
+            <?php
                 $currentSchoolYear = '';
                 $currentSemester = '';
                 while ($row = $result->fetch_assoc()) :
@@ -81,29 +81,26 @@ $notifications = $NotificationManager->getNotifications();
                     $semester = $row['semester'];
 
                     if ($currentSchoolYear != $schoolYear || $currentSemester != $semester) :
-                        if ($currentSchoolYear != '') {
-                            echo '</tbody>'; // Close the previous tbody
-                        }
-                        $currentSchoolYear = $schoolYear;
-                        $currentSemester = $semester;
-                ?>
-                        <tbody class="group">
-                            <tr>
-                                <td colspan="4" class="group-header">
-                                    <?php echo $schoolYear . ' ' . $semester; ?>
-                                </td>
-                            </tr>
-                <?php
-                    endif;
                 ?>
                         <tr>
-                            <td data-cell="Admin Id"><?php echo htmlspecialchars($row['admin_id']); ?></td>
-                            <td data-cell="Event Type"><?php echo htmlspecialchars($row['event_type']); ?></td>
-                            <td data-cell="Event Description"><?php echo htmlspecialchars($row['event_description']); ?></td>
-                            <td data-cell="Action Taken At"><?php echo htmlspecialchars($row['formatted_created_at']); ?></td>
+                            <td data-cell="School Year and Semester" colspan="9" class="group-header">
+                                <?php echo $schoolYear . ' ' . $semester; ?>
+                            </td>
                         </tr>
+                        <?php
+                        // Update the current group
+                        $currentSchoolYear = $schoolYear;
+                        $currentSemester = $semester;
+                    endif;
+                    ?>
+                    <tr>
+                        <td data-cell="Admin Id"><?php echo htmlspecialchars($row['admin_id']); ?></td>
+                        <td data-cell="Event Type"><?php echo htmlspecialchars($row['event_type']); ?></td>
+                        <td data-cell="Event Description"><?php echo htmlspecialchars($row['event_description']); ?></td>
+                        <td data-cell="Action Taken At"><?php echo htmlspecialchars($row['formatted_created_at']); ?></td>
+                    </tr>
                 <?php endwhile; ?>
-                </tbody>
+            </tbody>
             </table>
         </div>
     </main>

@@ -54,9 +54,9 @@
                         header('Location: ../admin_labcheck/home.php');
                     }
                     
-                    else if($usertype === 'professor'){
+                    else if($usertype === 'faculty'){
                         session_regenerate_id();
-                        $_SESSION['professor'] = TRUE;
+                        $_SESSION['faculty'] = TRUE;
                         $_SESSION['name'] = $firstname . " " . $middlename . " " . $lastname;
                         $_SESSION['userid'] = $id;
                         $_SESSION['usertype'] = $usertype;

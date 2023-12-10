@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+require "../../vendor/autoload.php";
+use Minishlink\WebPush\Subscription;
+use Minishlink\WebPush\WebPush;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_POST["submit_request"])) {
 
     $requestType = $_POST["request_type"];
@@ -18,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_POST["submit_request"])) {
         exit();
     }
 
-    
     include_once "../../connection/database.php";
 
     $userid = $_SESSION['userid']; 
@@ -62,11 +66,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_POST["submit_request"])) {
     $stmt->bind_param("sssssssisss", $userid, $formattedNumber, $name, $description, $timeStart, $timeEnd, $date, $room, $requestType,  $schoolYear, $semester);
 
     if ($stmt->execute()) {
+        if($requestType === 'comlab usage')
+            $linkUrl = "http://localhost/labcheckv2/admin_labcheck/comlab_usage.php";
+        elseif ($requestType === 'repair') 
+            $linkUrl = "http://localhost/labcheckv2/admin_labcheck/terminal_repair.php";
+        elseif ($requestType === 'equipment')
+            $linkUrl = "http://localhost/labcheckv2/admin_labcheck/request_equipment.php";
+        
+        sendWebNotification("Someone is requesting.", $description ,"../images/labcheck_logo.png","../images/udm_logo.png", $linkUrl , $conn);
   
         $_SESSION['notification'] = [
             'message' => 'Add request successfully',
             'type' => 'success' 
         ];
+
         
     } else {
         $_SESSION['notification'] = [
@@ -76,5 +89,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_POST["submit_request"])) {
     }
 
     header("Location: ../make_a_request.php");
+
 }
+
+function sendWebNotification($title, $message, $icon, $image, $onclic_url, $conn) {
+    $query1 = "SELECT * FROM webnotificationsubscription";
+    $stmt = $conn->prepare($query1);
+
+    if ($stmt) {
+        $stmt->execute();
+        $result1 = $stmt->get_result();
+
+        if ($result1) {
+            while ($row = $result1->fetch_assoc()) {
+                $sub = Subscription::create(json_decode($row['details'], true));
+
+                $push = new WebPush([
+                    "VAPID" => [
+                        "subject" => "leguizcc12@gmail.com",
+                        "publicKey" => "BBt4aeJUh0cO3PoGP_T8BKsM8QtggF4zYmWDNvSOtHqwa91VO8sQVqovNBXs-U7DxjczjMw4jeeFOX1pNGktc2c",
+                        "privateKey" => "1vjk0EpbiqMv2wU4F2JuYvsHamPCsc4RECWMzfxKQ5o"
+                    ]
+                ]);
+
+                $result = $push->sendOneNotification($sub, json_encode([
+                    "title" => $title,
+                    "body" => $message,
+                    "icon" => $icon,
+                    "image" => $image,
+                    "onclic_url" => $onclic_url
+                ]));
+
+                if ($result->isSuccess()) {
+                    $_SESSION['notification'] = [
+                        'message' => 'Push Notification successfully',
+                        'type' => 'success'
+                    ];
+                } else {
+                    $_SESSION['notification'] = [
+                        'message' => 'Push Notification Failed',
+                        'type' => 'error'
+                    ];
+                }
+            }
+            $stmt->close();
+        } else {
+            $_SESSION['notification'] = [
+                'message' => 'Error in fetching results',
+                'type' => 'error'
+            ];
+        }
+    } else {
+        $_SESSION['notification'] = [
+            'message' => 'Error in preparing the statement',
+            'type' => 'error'
+        ];
+    }
+}
+
+
 ?>
