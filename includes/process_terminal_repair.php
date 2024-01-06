@@ -41,9 +41,9 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
     $feedbackDone = "DONE($formattedDateTime)";
     if ($newStatus === 'reject') {
         if ($stmt = $conn->prepare("UPDATE request 
-        SET status = ?, feedback = CONCAT(COALESCE(feedback, ''), ?) 
+        SET status = ?, feedback = CONCAT(COALESCE(feedback, ''), ?), admin_action = ? 
         WHERE request_id = ? AND request_type = ?;")) {
-            $stmt->bind_param('ssis', $newStatus, $rejectReason, $requestId, $requestType);
+            $stmt->bind_param('sssis', $newStatus, $rejectReason, $currentDateTime, $requestId, $requestType);
 
             if ($stmt->execute()) {
                 // Log successful update
@@ -73,8 +73,8 @@ if (isset($_POST['resolved']) || isset($_POST['reject'])) {
             ];
         }
     } elseif ($newStatus === 'resolved') {
-        if ($stmt = $conn->prepare("UPDATE request SET status = ?, feedback = CONCAT(COALESCE(feedback, ''), ?) WHERE request_id = ? AND request_type = ?")) {
-            $stmt->bind_param('ssis', $newStatus, $feedbackDone, $requestId, $requestType);
+        if ($stmt = $conn->prepare("UPDATE request SET status = ?, feedback = CONCAT(COALESCE(feedback, ''), ?), admin_action = ? WHERE request_id = ? AND request_type = ?")) {
+            $stmt->bind_param('sssis', $newStatus, $feedbackDone, $currentDateTime, $requestId, $requestType);
                 
             if ($stmt->execute()) {
                 // Log successful update

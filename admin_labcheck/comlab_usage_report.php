@@ -15,14 +15,14 @@
 
     try {
         require_once "../connection/database.php";
-        $sql='SELECT r.request_id, r.ticket_no, r.name, r.user_id, r.description, r.time, r.time_end, r.date, r.room_id, r.status, r.feedback, r.school_year, r.semester
+        $sql='SELECT r.request_id, r.ticket_no, r.name, r.user_id, r.description, r.time, r.time_end, r.date, r.room_id, r.status, r.feedback, r.school_year, r.semester, r.admin_action
             FROM request r
             JOIN academic_year ay
             ON r.school_year = ay.school_year AND r.semester = ay.semester
             WHERE ay.status = 1
             AND r.request_type = ?
             AND (r.status = ? OR r.status = ?)
-            ORDER BY r.school_year, r.semester, r.request_id DESC';
+            ORDER BY r.school_year, r.semester, r.admin_action DESC';
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('sss', $requestType, $status, $rejectStatus);

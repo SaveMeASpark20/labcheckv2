@@ -36,8 +36,8 @@ if (isset($_POST['approve']) || isset($_POST['reject'])) {
     $stmtFetchTicket->close();
 
     if ($newStatus === 'reject') {
-        if ($stmt = $conn->prepare('UPDATE request SET status = ?, feedback = ? WHERE request_id = ? AND request_type = ?')) {
-            $stmt->bind_param('ssis', $newStatus, $rejectReason, $requestId, $requestType);
+        if ($stmt = $conn->prepare('UPDATE request SET status = ?, feedback = ?, admin_action =? WHERE request_id = ? AND request_type = ?')) {
+            $stmt->bind_param('sssis', $newStatus, $rejectReason, $currentDateTime, $requestId, $requestType);
 
             if ($stmt->execute()) {
                 // Log successful update
@@ -67,8 +67,8 @@ if (isset($_POST['approve']) || isset($_POST['reject'])) {
             ];
         }
     } elseif ($newStatus === 'approve') {
-        if ($stmt = $conn->prepare('UPDATE request SET status = ?, feedback = ? WHERE request_id = ? AND request_type = ?')) {
-            $stmt->bind_param('ssis', $newStatus, $feedbackDone, $requestId, $requestType);
+        if ($stmt = $conn->prepare('UPDATE request SET status = ?, feedback = ?, admin_action = ? WHERE request_id = ? AND request_type = ?')) {
+            $stmt->bind_param('sssis', $newStatus, $feedbackDone, $currentDateTime, $requestId, $requestType);
 
             if ($stmt->execute()) {
                 // Log successful update
