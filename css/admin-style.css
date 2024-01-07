@@ -1142,7 +1142,7 @@ th, td {
 	}
 
 	/* sidebar hiding */
-	#sidebar.hides {
+	#sidebar.hide {
 		max-width: 65px;
 	}
   }

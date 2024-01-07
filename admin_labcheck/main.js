@@ -423,5 +423,23 @@ if(document.querySelector('.notification')){
 }
 
 
+// Function to add or remove the hide class based on viewport width
+function hideSidebar() {
+    var sidebar = document.getElementById('sidebar');
+    var hideClass = 'hide';
+
+    if (window.innerWidth <= 768) {
+      sidebar.classList.add(hideClass);
+    } else {
+      sidebar.classList.remove(hideClass);
+    }
+  }
+
+  // Initial call to set the initial state based on the viewport width
+  hideSidebar();
+
+  // Attach the function to the window resize event
+  window.addEventListener('resize', hideSidebar);
+
   
 

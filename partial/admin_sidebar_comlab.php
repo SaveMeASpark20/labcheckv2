@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="../request-notification/notification.css">
 	<script defer src="main.js"></script>
 	<script defer src="../request-notification/request-notification.js"></script>
+	<script defer src="sw.js"></script>
+    <script defer src="webpush.js"></script>
 	<title>Admin</title>
 </head>
 <body>

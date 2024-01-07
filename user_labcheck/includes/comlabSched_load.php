@@ -6,10 +6,8 @@ $data = array();
 $room = $_GET['room'];
 $query = "SELECT * FROM complab_schedules WHERE ROOM_ID = ? ORDER BY schedule_id";
 
-
-
 if ($stmt = $conn->prepare($query)) {
-    $stmt->bind_param('s', $room);
+    $stmt->bind_param('i', $room); //pinalitan dahil integer type yan sa database
     $stmt->execute();
 
     // Get the result set
