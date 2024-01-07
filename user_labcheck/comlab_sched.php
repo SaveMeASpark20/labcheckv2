@@ -86,6 +86,13 @@
             width: 100%;
         }
 
+        #room205Button, #room206Button {
+            padding: 5px;
+            border: none;
+            border-radius: 10px
+        }
+
+
         .container {
             padding: 0;
             margin: 0;

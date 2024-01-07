@@ -28,6 +28,8 @@ if (isset($_POST["title"])) {
         $statement->execute();
         $statement->close();
 
+        $insertedId = $conn->insert_id;
+        
         $systemLog = "INSERT INTO system_logs (event_type, event_description, admin_id, school_year, semester) VALUES(?, ?, ?, ?, ?)";
         $eventType = "Add Schedules";
         $event_description = "Add Schedule for $title from $formattedStartDateTime, to $formattedEndDateTime by: $adminName";
@@ -36,6 +38,8 @@ if (isset($_POST["title"])) {
             $logStatement->bind_param("sssss", $eventType, $event_description, $adminid, $school_year, $semester);
             $logStatement->execute();
             $logStatement->close();
+
+            echo json_encode(["id" => $insertedId]);
         }else {
             die("Error in the prepared statement for system logs: " . $conn->error);
         }

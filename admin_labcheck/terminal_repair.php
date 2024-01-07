@@ -158,6 +158,14 @@
         </form>
     </div>
 </div>
+
+<script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        updateNotifyStatusAndIndicator('repair');
+    });
+</script>
+
 </body>
 </html>
 

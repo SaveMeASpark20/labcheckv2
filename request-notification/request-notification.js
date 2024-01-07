@@ -48,6 +48,7 @@ setInterval(updateIndicators, 500000);
 
 //Function to update the notify status and indicator
 async function updateNotifyStatusAndIndicator(category) {
+    console.log("update");
     try {
         const response = await fetch('../request-notification/update-notify-status-indicator.php', {
             method: 'POST',
@@ -73,12 +74,3 @@ async function updateNotifyStatusAndIndicator(category) {
     }
 }
 
-document.getElementById('comlabUsageLink').addEventListener('click', function () {
-    updateNotifyStatusAndIndicator('comlab usage');
-});
-document.getElementById('requestEquipmentLink').addEventListener('click', function () {
-    updateNotifyStatusAndIndicator('equipment');
-});
-document.getElementById('terminalRepairLink').addEventListener('click', function () {
-    updateNotifyStatusAndIndicator('repair');
-});
