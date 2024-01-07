@@ -140,5 +140,13 @@
             </form>
         </div>
     </div>
+
+    <script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        updateNotifyStatusAndIndicator('comlab usage');
+    });
+    </script>
+
 </body>
 </html>

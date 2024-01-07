@@ -78,7 +78,7 @@ $page = "ComLab Schedule";
                             selectable: true,
                             selectHelper: true,
                             select: function (start, end, allDay) {
-                            var title = prompt("Enter Event Title");
+                            var title = prompt("Enter Schedule Description");
                                 if (title) {
                                     var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
                                     var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
@@ -90,16 +90,29 @@ $page = "ComLab Schedule";
                                         end: end,
                                         room: selectedRoom
                                     };
-
-                                    // Add the event to the calendar
-                                    calendar.fullCalendar('renderEvent', data);
+                                    
+                                    // // Add the event to the calendar
+                                    // calendar.fullCalendar('renderEvent', data);
 
                                     $.ajax({
                                         url: "complab_schedule/insert.php",
                                         type: "POST",
                                         data: data, // Send the event data to your server
                                         success: function (response) {
-                                            alert("Added Successfully");
+                                            var insertedId = JSON.parse(response).id;
+
+                                            if (insertedId) {
+                                                // If a valid ID is received, update the event's ID
+                                                data.id = insertedId;
+                                                calendar.fullCalendar('renderEvent', data);
+                                                alert("Added Successfully with ID: " + insertedId);
+                                            } else {
+                                                alert("Error: Unable to get a valid ID from the server");
+                                            }
+                                        },
+                                        error: function () {
+                                            // Handle errors
+                                            alert("Error during AJAX request");
                                         }
                                     });
                                 }
@@ -111,15 +124,15 @@ $page = "ComLab Schedule";
                                 var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
                                 var title = event.title;
                                 var id = event.id;
-                                
+                                console.log(event);
                                 $.ajax({
                                     url:"complab_schedule/update.php",
                                     type:"POST",
                                     data:{title:title, start:start, end:end, id:id},
                                     success:function()
                                     {
-                                        calendar.fullCalendar('refetchEvents');
-                                        alert('Event Update');
+                                        calendar.fullCalendar('updateEvents', id);
+                                        alert('Event Updated');
                                     }
                                 })
                             },
@@ -130,13 +143,14 @@ $page = "ComLab Schedule";
                                 var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
                                 var title = event.title;
                                 var id = event.id;
+                                console.log(event);
                                 $.ajax({
                                     url:"complab_schedule/update.php",
                                     type:"POST",
                                     data:{title:title, start:start, end:end, id:id},
                                     success:function()
                                     {
-                                        calendar.fullCalendar('refetchEvents');
+                                        calendar.fullCalendar('updateEvents', id);
                                         alert("Event Updated");
                                     }
                                 });
@@ -172,6 +186,12 @@ $page = "ComLab Schedule";
         #calendar {
             display: none;
             
+        }
+
+        #room205Button, #room206Button {
+            padding: 5px;
+            border: none;
+            border-radius: 10px
         }
 
         .active-button {

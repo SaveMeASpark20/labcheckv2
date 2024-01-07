@@ -84,7 +84,7 @@ $notifications = $NotificationManager->getNotifications();
                             <td data-cell="Firstname"><?php echo htmlspecialchars($row['firstname']); ?></td>
                             <td data-cell="Middlename"><?php echo htmlspecialchars($row['middlename']); ?></td>
                             <td data-cell="ID"><?php echo htmlspecialchars($row['id']); ?></td>
-                            <td data-cell="Section" id="user-section"><?php echo htmlspecialchars($row['section']); ?></td>
+                            <td data-cell="section" id="user-section"><?php echo htmlspecialchars($row['section']); ?></td>
                             <td data-cell="User Type"><?php echo htmlspecialchars($row['user_type']); ?></td>
                         </tr>
                     <?php endwhile; ?>
