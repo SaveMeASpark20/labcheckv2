@@ -22,7 +22,7 @@
 		<ul class="side-menu">
 			<li><a href="home.php"><i class='fa fa-home icon' ></i> Dashboard</a></li>
 			<li><a href="user_register.php"><i class='fa fa-user-circle icon' ></i> User Registration</a></li>
-			<li><a href="complab_schedule.php"><i class='fa fa-calendar icon' ></i> ComLab Schedule</a></li>
+			<li><a href="complab_schedule.php"><i class='fa fa-calendar icon' ></i> Calendar</a></li>
 			<li>
 				<a><i class='fa fa-file icon' ></i> Request <span id="requestIndication" class="notification-indicator"></span><i class='fa fa-angle-right icon-right' ></i></a>
 				<ul class="side-dropdown">

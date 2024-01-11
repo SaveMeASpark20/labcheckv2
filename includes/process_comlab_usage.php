@@ -80,10 +80,32 @@ if (isset($_POST['approve']) || isset($_POST['reject'])) {
                 $logStmt->bind_param('ssssss', $logEventType, $logEventDescription, $adminId, $currentDateTime, $schoolYear, $semester);
                 $logStmt->execute();
 
+                $calendarStmt = $conn->prepare('SELECT description, time, time_end, date, name, room_id, school_year, semester FROM request WHERE request_id = ?');
+                $calendarStmt->bind_param('i', $requestId);
+                $calendarStmt->execute();
+                $calendarStmt->bind_result($description, $timeStart, $timeEnd, $date, $userName, $roomId, $userSchoolYear, $userSemester);
+                $calendarStmt->fetch();
+                $calendarStmt->close();
+
+                $startEvent = $date . ' ' . $timeStart;
+                // $dateTimeStart = new DateTime($dateTimeString);
+                // $startEvent = $dateTimeStart->format('Y-m-d H:i:s');
+
+                $endEvent = $date . ' ' . $timeEnd;
+                // $dateTimeEnd = new DateTime($dateTimeString);
+                // $endEvent = $dateTimeEnd->format('Y-m-d H:i:s');
+
+                $title = $description . " by " . $userName;
+
+                $insertCalendar = $conn->prepare('INSERT INTO complab_schedules (title, start_event, end_event, room_id, school_year, semester) VALUES (?, ?, ?, ?, ?, ?)');
+                $insertCalendar->bind_param('sssiss', $title, $startEvent, $endEvent, $roomId, $userSchoolYear, $userSemester);
+                $insertCalendar->execute();
+                
                 $_SESSION['notification'] = [
                     'message' => 'Successfully approved the request',
                     'type' => 'success',
                 ];
+
             } else {
                 $_SESSION['notification'] = [
                     'message' => "There's an issue updating the request status",

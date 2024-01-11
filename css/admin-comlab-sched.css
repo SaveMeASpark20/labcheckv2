@@ -265,7 +265,7 @@ nav .toggle-sidebar {
     margin:20px;
     justify-content: space-between;
     background: #fff;
-    padding: 20px 0;
+    padding: 10px;
     border-radius: 1rem;
     flex-direction: column;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
@@ -275,6 +275,13 @@ nav .toggle-sidebar {
 table {
 	overflow:auto !important;
 }
+
+.calendar-roomsched {
+	display: flex;
+
+}
+
+
 /* #room205Button,
 #room206Button {
 	background: rgb(2, 6, 255);

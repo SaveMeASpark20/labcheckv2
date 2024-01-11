@@ -18,7 +18,7 @@
             <ul class="navbar-links">
                 <li><a href="home.php">Home</a></li>
                 <li><a href="make_a_request.php">Make a request</a></li>
-                <li><a href="comlab_sched.php">ComLab Schedule</a></li>
+                <li><a href="comlab_sched.php">Calendar</a></li>
                 <li><a href="../includes/logout.php">Logout</a></li>
             </ul>
     </nav>
