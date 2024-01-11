@@ -123,7 +123,7 @@
 
                                     <form action="../includes/process_terminal_repair.php" method="post" class="rejection-form">
                                         <input type="hidden" name="request_id" value="<?php echo $row['request_id']; ?>">
-                                        <button type="button" onclick="showRejectionReason(this)">Reject</button>
+                                        <button type="button" onclick="showRejectionReason(this)">Deny</button>
                                     </form>
                                     
                                 </div>
@@ -138,10 +138,10 @@
 <div id="rejectionModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeModal">&times;</span>
-        <h2>Rejection Reason</h2>
+        <h2>Reason for Denial</h2>
         <form action="../includes/process_terminal_repair.php" method="POST" class="modal-rejection-form">
             <input type="hidden" name="request_id" value="">
-            <textarea id="rejection_reason" name="rejection_reason" placeholder="Enter rejection reason" required></textarea>
+            <textarea id="rejection_reason" name="rejection_reason" placeholder="Enter reason for denial" required></textarea>
             <input type="submit" name="reject"/>
         </form>
     </div>
